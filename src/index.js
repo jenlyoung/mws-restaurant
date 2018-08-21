@@ -202,3 +202,5 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
     });
 
 }
+
+export default updateRestaurants();

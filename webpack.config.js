@@ -4,7 +4,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        index: './src/index.js'
+        index: './src/index.js',
+        restaurant: './src/restaurant_info.js'
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -31,7 +32,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist'], {exclude: ['index.html', 'restaurants.json']}),
+        // new CleanWebpackPlugin(['dist'], {exclude: ['index.html', 'restaurants.json', 'restaurant.html']}),
         new CopyWebpackPlugin([{from: 'src/images', to: 'images'}])
     ],
 };
