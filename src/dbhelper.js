@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import idbhelper from "./idbhelper";
 
 //https://github.com/Leaflet/Leaflet/issues/4968#issuecomment-264311098
 let DefaultIcon = L.icon({
@@ -20,27 +21,38 @@ class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        const port = 8080 // Change this to your server port
-        return `http://localhost:${port}/restaurants.json`;
+        const port = 1337 // Change this to your server port
+        return `http://localhost:${port}/restaurants`;
     }
 
     /**
      * Fetch all restaurants.
      */
     static fetchRestaurants(callback) {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', DBHelper.DATABASE_URL);
-        xhr.onload = () => {
-            if (xhr.status === 200) { // Got a success response from server!
-                const json = JSON.parse(xhr.responseText);
-                const restaurants = json.restaurants;
+        //1 check cache
+
+        idbhelper.get('restaurants').then(value => {
+            if(value){
+                const restaurants = value;
+                console.log(restaurants);
                 callback(null, restaurants);
-            } else { // Oops!. Got an error from server.
-                const error = (`Request failed. Returned status of ${xhr.status}`);
-                callback(error, null);
+            }else {
+                let xhr = new XMLHttpRequest();
+                xhr.open('GET', DBHelper.DATABASE_URL);
+                xhr.onload = () => {
+                    if (xhr.status === 200) { // Got a success response from server!
+                        const json = JSON.parse(xhr.responseText);
+                        idbhelper.set('restaurants', json);
+                        callback(null, json);
+                    } else { // Oops!. Got an error from server.
+                        const error = (`Request failed. Returned status of ${xhr.status}`);
+                        callback(error, null);
+                    }
+                };
+                xhr.send();
             }
-        };
-        xhr.send();
+        })
+
     }
 
     /**

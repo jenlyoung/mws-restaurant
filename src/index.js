@@ -3,6 +3,7 @@ import './styles.css';
 import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
+import registerServiceWorker from "./register";
 
 let restaurants,
     neighborhoods,
@@ -14,6 +15,8 @@ let markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+    registerServiceWorker();
+
     document.querySelector('select[name="neighborhoods"]').onchange=updateRestaurants;
     document.querySelector('select[name="cuisines"]').onchange=updateRestaurants;
     initMap(); // added
@@ -205,4 +208,3 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
 
 }
 
-// export default updateRestaurants;
