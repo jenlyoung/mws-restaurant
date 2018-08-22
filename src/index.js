@@ -14,6 +14,8 @@ let markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelector('select[name="neighborhoods"]').onchange=updateRestaurants;
+    document.querySelector('select[name="cuisines"]').onchange=updateRestaurants;
     initMap(); // added
     fetchNeighborhoods();
     fetchCuisines();
@@ -203,4 +205,4 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
 
 }
 
-export default updateRestaurants();
+// export default updateRestaurants;
