@@ -2,6 +2,7 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -33,6 +34,8 @@ module.exports = {
         ]
     },
     plugins: [
+        new HtmlWebpackPlugin({filename: 'index.html', template: 'src/index.html'}),
+        new HtmlWebpackPlugin({filename: 'restaurant.html', template: 'src/restaurant.html'}),
         // new CleanWebpackPlugin(['dist'], {exclude: ['index.html', 'restaurants.json', 'restaurant.html']}),
         new CopyWebpackPlugin([{from: 'src/images', to: 'images'}]),
         new WorkboxPlugin.GenerateSW({
