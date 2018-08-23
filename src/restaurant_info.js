@@ -3,6 +3,8 @@ import './styles.css';
 import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
+// import registerServiceWorker from "./register";
+// registerServiceWorker();
 
 let restaurant;
 let newMap;
@@ -68,7 +70,7 @@ let fetchRestaurantFromURL = (callback) => {
   }
   const id = getParameterByName('id');
   if (!id) { // no id found in URL
-    error = 'No restaurant id in URL'
+    error = 'No restaurant id in URL';
     callback(error, null);
   } else {
     DBHelper.fetchRestaurantById(id, (error, restaurant) => {

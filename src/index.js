@@ -3,7 +3,18 @@ import './styles.css';
 import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
-import registerServiceWorker from "./register";
+// import registerServiceWorker from "./register";
+// registerServiceWorker();
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('SW registered: ', registration);
+        }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+        });
+    });
+}
 
 let restaurants,
     neighborhoods,
@@ -15,7 +26,6 @@ let markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-    registerServiceWorker();
 
     document.querySelector('select[name="neighborhoods"]').onchange=updateRestaurants;
     document.querySelector('select[name="cuisines"]').onchange=updateRestaurants;

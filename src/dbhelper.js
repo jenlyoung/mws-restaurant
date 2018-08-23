@@ -34,7 +34,7 @@ class DBHelper {
         idbhelper.get('restaurants').then(value => {
             if(value){
                 const restaurants = value;
-                console.log(restaurants);
+
                 callback(null, restaurants);
             }else {
                 let xhr = new XMLHttpRequest();
