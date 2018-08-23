@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jenlyoung/mws-restaurant-stage-2-client#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
