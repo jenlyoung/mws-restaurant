@@ -21,7 +21,7 @@ class DBHelper {
      * Change this to restaurants.json file location on your server.
      */
     static get DATABASE_URL() {
-        const port = 1337 // Change this to your server port
+        const port = 1337; // Change this to your server port
         return `http://localhost:${port}/restaurants`;
     }
 
@@ -174,11 +174,11 @@ class DBHelper {
      * Restaurant image URL.
      */
     static imageThumnailUrlForRestaurant(restaurant) {
-        return (`/images/${restaurant.id}-300_tn.jpg`);
+        return (`/images/${restaurant.id}-600_med_1x.jpg`);
     }
 
     static imageUrlForRestaurant(restaurant) {
-        return (`/images/${restaurant.id}-300_tn.jpg 500w, /images/${restaurant.id}-600_med_1x.jpg 700w,/images/${restaurant.id}-800_lg_1x.jpg 1000w`);
+        return (`/images/${restaurant.id}-600_med_1x.jpg 700w,/images/${restaurant.id}-800_lg_1x.jpg 2000w`);
     }
 
     /**
@@ -195,18 +195,6 @@ class DBHelper {
         marker.addTo(map);
         return marker;
     }
-
-    /* static mapMarkerForRestaurant(restaurant, map) {
-      const marker = new google.maps.Marker({
-        position: restaurant.latlng,
-        title: restaurant.name,
-        url: DBHelper.urlForRestaurant(restaurant),
-        map: map,
-        animation: google.maps.Animation.DROP}
-      );
-      return marker;
-    } */
-
 }
 
 export default DBHelper;

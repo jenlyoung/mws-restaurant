@@ -4,7 +4,7 @@ import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
 import registerServiceWorker from "./register";
-registerServiceWorker();
+// registerServiceWorker();
 
 
 
@@ -162,8 +162,8 @@ let createRestaurantHTML = (restaurant) => {
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     image.alt = `Image from the restaurant ${restaurant.name}`;
-    image.srcset = DBHelper.imageUrlForRestaurant(restaurant);
-    // image.src = DBHelper.imageThumnailUrlForRestaurant(restaurant);
+    // image.srcset = DBHelper.imageUrlForRestaurant(restaurant);
+    image.src = DBHelper.imageThumnailUrlForRestaurant(restaurant);
     li.append(image);
 
     const name = document.createElement('h3');

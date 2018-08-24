@@ -1,18 +1,22 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+//used to take images from src to dist
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+//plugin for the service worker
 const WorkboxPlugin = require('workbox-webpack-plugin');
+//plugin for putting html in dist
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+//plugin for compressing js into gz
 const CompressionPlugin = require("compression-webpack-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
         index: './src/index.js',
         restaurant: './src/restaurant_info.js'
     },
-    mode: 'production',
-    devtool: 'source-map',
+    mode: 'development',
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
     },
@@ -60,6 +64,7 @@ module.exports = {
             // and not allow any straggling "old" SWs to hang around
             clientsClaim: true,
             skipWaiting: true,
+            //code below limits the caching of the images for faster runtime
             exclude: [/\.(?:png|jpg|jpeg|svg)$/],
             runtimeCaching: [{
                 urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
@@ -76,10 +81,12 @@ module.exports = {
             test: /\.js/
         })
     ],
+    // split code into various smaller bundles
     optimization: {
         splitChunks: {
             chunks: 'all'
         },
+        //uglifier removes comments and does not beautify
         minimizer: [
             new UglifyJsPlugin({
                 uglifyOptions: {

@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
     "build": "webpack",
-    "start": "http-server dist"
+    "start": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",

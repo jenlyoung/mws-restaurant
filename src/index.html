@@ -25,19 +25,19 @@
     <section id="map-container" aria-label="restaurant location map" role="application">
         <div id="map" alt=""></div>
     </section>
-    <nav>
+    <section>
         <div id="filter-container" class="filter-options">
             <label for="filter-buttons">Filter Results</label>
-            <div id="filter-buttons" class="select-buttons">
-                <select id="neighborhoods-select" name="neighborhoods" tabindex="0" aria-label="Neighborhoods">
+            <div id="filter-buttons">
+                <select id="neighborhoods-select" class="select-buttons" name="neighborhoods" tabindex="0" aria-label="Neighborhoods">
                     <option value="all">All Neighborhoods</option>
                 </select>
-                <select id="cuisines-select" name="cuisines" tabindex="0" aria-label="Cuisines">
+                <select id="cuisines-select" class="select-buttons" name="cuisines" tabindex="0" aria-label="Cuisines">
                     <option value="all">All Cuisines</option>
                 </select>
             </div>
         </div>
-    </nav>
+    </section>
     <section>
         <h2 class="restaurants">Restaurants</h2>
         <ul id="restaurants-list"></ul>
