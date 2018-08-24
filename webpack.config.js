@@ -15,8 +15,8 @@ module.exports = {
         index: './src/index.js',
         restaurant: './src/restaurant_info.js'
     },
-    mode: 'development',
-    devtool: 'inline-source-map',
+    mode: 'production',
+    devtool: 'source-map',
     devServer: {
         contentBase: './dist'
     },
@@ -58,7 +58,7 @@ module.exports = {
             }
         }),
         new CleanWebpackPlugin(['dist']),
-        new CopyWebpackPlugin([{from: 'src/images', to: 'images'}]),
+        new CopyWebpackPlugin([{from: 'src/images', to: 'images'}, {from: 'src/manifest.json', to: 'manifest.json'}]),
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around

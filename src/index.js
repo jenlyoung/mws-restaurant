@@ -4,7 +4,7 @@ import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
 import registerServiceWorker from "./register";
-// registerServiceWorker();
+registerServiceWorker();
 
 
 

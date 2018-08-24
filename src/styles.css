@@ -19,6 +19,7 @@ body {
     margin: 0;
     position: relative;
     width: 100%;
+    margin: 0;
     /*max-width: 1275px;*/
     /*margin-left: auto;*/
     /*margin-right: auto;*/
@@ -68,9 +69,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     color: #aaa;
     font-size: 8pt;
     letter-spacing: 1px;
-    padding: 25px;
+    /*padding: 25px;*/
     text-align: center;
     text-transform: uppercase;
+    max-width: 100%;
 }
 
 /* ====================== Skip Link ====================== */
