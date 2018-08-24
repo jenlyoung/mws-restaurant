@@ -3,8 +3,8 @@ import './styles.css';
 import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
-// import registerServiceWorker from "./register";
-// registerServiceWorker();
+import registerServiceWorker from "./register";
+registerServiceWorker();
 
 let restaurant;
 let newMap;

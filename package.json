@@ -8,7 +8,7 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "start": "webpack-dev-server --open",
-    "audit": "npm run build && http-server dist"
+    "audit": "npm run build && http-server dist -g"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "workbox-webpack-plugin": "^3.4.1"
   },
   "dependencies": {
+    "http-server-ssl": "0.0.3",
     "idb": "^2.1.3",
     "leaflet": "^1.3.3",
     "normalize.css": "^8.0.0"

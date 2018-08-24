@@ -28,7 +28,7 @@ ul, li {
 }
 
 img {
-    border: none 0px #fff;
+    border: none 0 #fff;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -49,14 +49,18 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 #footer {
-    background-color: #444;
-    color: #aaa;
+    background-color: #333;
+    color: #fff;
     font-size: 8pt;
     letter-spacing: 1px;
-    /*padding: 25px;*/
+    padding: 25px 0;
     text-align: center;
     text-transform: uppercase;
     max-width: 100%;
+}
+
+#footer a {
+    color: #33a7ff;
 }
 
 /* ====================== Skip Link ====================== */
@@ -81,7 +85,7 @@ nav h1 {
 }
 
 nav h1 a {
-    color: white;
+    color: #fff;
     font-size: 20px;
     font-weight: 200;
     letter-spacing: 5px;
@@ -90,6 +94,11 @@ nav h1 a {
 }
 
 nav h1 a:focus {
+    color: #3397db;
+    text-decoration: underline;
+}
+
+nav h1 a:hover {
     color: #3397db;
     text-decoration: underline;
 }
@@ -118,14 +127,14 @@ nav h1 a:focus {
 
 /* Add a color to all links inside the list */
 #breadcrumb li a {
-    color: #0275d8;
+    color: #01447e;
     text-decoration: none;
     padding: 10px;
 }
 
 /* Add a color on mouse-over */
 #breadcrumb li a:hover {
-    color: #01447e;
+    color: #c15300;
     text-decoration: underline;
 }
 
@@ -144,7 +153,7 @@ nav h1 a:focus {
 .filter-options {
     width: 100%;
     height: auto;
-    background-color: #3397DB;
+    background-color: #01447e;
     display: flex;
     flex-flow: row wrap;
     padding: 10px 0;
@@ -153,7 +162,7 @@ nav h1 a:focus {
 }
 
 .filter-options label {
-    color: white;
+    color: #fff;
     font-size: 20px;
     font-weight: 200;
     line-height: 1.5em;
@@ -162,7 +171,7 @@ nav h1 a:focus {
 }
 
 .select-buttons {
-    background-color: white;
+    background-color: #fff;
     border: 1px solid #ccc;
     font-family: Arial, sans-serif;
     font-size: 16pt;
@@ -217,7 +226,7 @@ nav h1 a:focus {
 }
 
 #restaurants-list li h3 {
-    color: #c47a00;
+    color: #c15300;
     font-family: Arial, sans-serif;
     font-size: 14pt;
     font-weight: 200;
@@ -232,7 +241,7 @@ nav h1 a:focus {
 }
 
 #restaurants-list li button {
-    background-color: #c47a00;
+    background-color: #c15300;
     border-bottom: 3px solid #eee;
     color: #fff;
     display: inline-block;
@@ -278,7 +287,7 @@ nav h1 a:focus {
 }
 
 .inside #map-container {
-    background: blue none repeat scroll 0 0;
+    background: #01447e none repeat scroll 0 0;
     height: 87%;
     right: 0;
     top: 80px;
@@ -302,7 +311,7 @@ nav h1 a:focus {
 }
 
 #restaurant-name {
-    color: #f18200;
+    color: #c15300;
     font-family: Arial, sans-serif;
     font-size: 20pt;
     font-weight: 200;
@@ -347,12 +356,11 @@ nav h1 a:focus {
 }
 
 #reviews-container {
-    padding-left: 20px;
     width: 100%;
 }
 
 #reviews-container h3 {
-    color: #f58500;
+    color: #c15300;
     font-size: 20pt;
     font-weight: 300;
     letter-spacing: -1px;
@@ -399,7 +407,7 @@ nav h1 a:focus {
         position: absolute;
         top: -40px;
         left: 0;
-        background: #c47a00;
+        background: #c15300;
         color: white;
         padding: 8px;
         z-index: 100;
@@ -407,7 +415,7 @@ nav h1 a:focus {
 
     .skip-link:focus {
         top: 0;
-        color: white;
+        color: #fff;
     }
 
     nav h1 a {
