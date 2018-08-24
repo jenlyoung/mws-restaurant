@@ -19,10 +19,6 @@ body {
     margin: 0;
     position: relative;
     width: 100%;
-    margin: 0;
-    /*max-width: 1275px;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
 }
 
 ul, li {
@@ -30,18 +26,6 @@ ul, li {
     font-size: 10pt;
     color: #333;
 }
-
-/*need this?*/
-/*a {*/
-/*color: #c47a00;*/
-/*text-decoration: none;*/
-/*}*/
-
-/*need this?*/
-/*a:hover, a:focus {*/
-/*color: #3397db;*/
-/*text-decoration: underline;*/
-/*}*/
 
 img {
     border: none 0px #fff;
@@ -408,47 +392,6 @@ nav h1 a:focus {
 }
 
 /*!* ====================== Media Queries ====================== *!*/
-/*@media screen and (min-width: 0px) {*/
-/*nav h1 a {*/
-/*font-size: 18px;*/
-/*}*/
-
-/*#restaurants-list li {*/
-/*max-width: 100%;*/
-/*}*/
-
-/*!*media queries*!*/
-/*@media screen and (min-width: 801px) and (max-width: 1080px) {*/
-/*#restaurants-list li {*/
-/*max-width: 39%;*/
-/*margin: 10px;*/
-/*justify-content: space-around;*/
-/*}*/
-/*}*/
-
-/*nav h1 a {*/
-/*font-size: 24px;*/
-/*}*/
-
-/*.inside #restaurant-name {*/
-/*font-size: 24px;*/
-/*}*/
-/*}*/
-
-/*@media screen and (min-width: 1081px) {*/
-/*#restaurants-list li {*/
-/*margin: 10px;*/
-/*max-width: 272px;*/
-/*}*/
-
-/*nav h1 a {*/
-/*font-size: 24px;*/
-/*}*/
-
-/*.inside #restaurant-name {*/
-/*font-size: 24px;*/
-/*}*/
-/*}*/
 
 @media screen and (min-width: 570px) {
     .skip-link {

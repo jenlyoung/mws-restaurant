@@ -3,7 +3,6 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import idbhelper from "./idbhelper";
 
-//https://github.com/Leaflet/Leaflet/issues/4968#issuecomment-264311098
 let DefaultIcon = L.icon({
     iconUrl: icon,
     shadowUrl: iconShadow
@@ -29,14 +28,16 @@ class DBHelper {
      * Fetch all restaurants.
      */
     static fetchRestaurants(callback) {
-        //1 check cache
+        //1st idbhelper checks cache
 
         idbhelper.get('restaurants').then(value => {
+            //if in the cache, it gets used
             if(value){
                 const restaurants = value;
 
                 callback(null, restaurants);
-            }else {
+            // if not in cache, makes an http request and serves and stores in cache
+            } else {
                 let xhr = new XMLHttpRequest();
                 xhr.open('GET', DBHelper.DATABASE_URL);
                 xhr.onload = () => {
@@ -173,10 +174,12 @@ class DBHelper {
     /**
      * Restaurant image URL.
      */
+    //This is a smaller image that will  be used for the first page
     static imageThumnailUrlForRestaurant(restaurant) {
         return (`/images/${restaurant.id}-600_med_1x.jpg`);
     }
 
+    //This is a srcset that will be used for the second page that will make the images responsive
     static imageUrlForRestaurant(restaurant) {
         return (`/images/${restaurant.id}-600_med_1x.jpg 700w,/images/${restaurant.id}-800_lg_1x.jpg 2000w`);
     }
