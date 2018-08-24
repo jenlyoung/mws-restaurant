@@ -12,7 +12,10 @@ let newMap;
 /**
  * Initialize map as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {  
+document.addEventListener('DOMContentLoaded', (event) => {
+    if(window.location.pathname !== '/restaurant.html'){
+        return;
+    }
   initMap();
 });
 

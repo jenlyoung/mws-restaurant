@@ -18,7 +18,9 @@ let markers = [];
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-
+    if(window.location.pathname !== '/index.html'){
+        return;
+    }
     document.querySelector('select[name="neighborhoods"]').onchange=updateRestaurants;
     document.querySelector('select[name="cuisines"]').onchange=updateRestaurants;
     initMap(); // added
