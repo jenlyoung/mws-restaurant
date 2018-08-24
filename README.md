@@ -1,4 +1,10 @@
-# mws-restaurant-stage-2-client
+# Restaurant Reviews App--Stage 2
+
+## Project Description
+
+This project is the second project for the Mobile Web Specialist Nanodegree. The goal of this project was to connect to an external server using asynchronous JavaScript to request JSON data from the server. The data received from the server is then stored  in an offline database using IndexedDB, which will create an app shell architecture.
+
+I chose to learn webpack, a static module bundler, for this project to optimize my code, increase performance times, and to run the service worker.
 
 
 
