@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 //plugin for compressing js into gz
 const CompressionPlugin = require("compression-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
     entry: {
@@ -58,7 +59,7 @@ module.exports = {
             }
         }),
         new CleanWebpackPlugin(['dist']),
-        new CopyWebpackPlugin([{from: 'src/images', to: 'images'}, {from: 'src/manifest.json', to: 'manifest.json'}]),
+        new CopyWebpackPlugin([{from: 'src/images', to: 'images'}]),
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast
             // and not allow any straggling "old" SWs to hang around
@@ -79,6 +80,20 @@ module.exports = {
         }),
         new CompressionPlugin({
             test: /\.js/
+        }),
+        new WebpackPwaManifest({
+            name: 'Restaurant Reviews',
+            short_name: 'MWS',
+            description: 'My awesome Progressive Web App!',
+            background_color: '#444444',
+            theme_color: '#444444',
+            crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
+            icons: [
+                {
+                    src: path.resolve('src/images/map_marker.png'),
+                    sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+                }
+            ]
         })
     ],
     // split code into various smaller bundles
