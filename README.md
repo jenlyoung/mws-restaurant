@@ -38,8 +38,5 @@ I chose to learn webpack, a static module bundler, for this project to optimize 
 
 ## Performance
 
-### Index Performance
  <img src="index-performance.png" />
  
-### Restaurant Performance
- <img src="restaurant-performance.png" />
