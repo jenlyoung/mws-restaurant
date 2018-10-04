@@ -161,6 +161,11 @@ let fillRestaurantsHTML = (restaurants = self.restaurants) => {
 let createRestaurantHTML = (restaurant) => {
     const li = document.createElement('li');
 
+    const favorite = document.createElement('button');
+    favorite.innerHTML = '<i class="fa fa-heart"></i>';
+    favorite.className = 'favorite-button';
+    li.append(favorite);
+
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     image.alt = `Image from the restaurant ${restaurant.name}`;
@@ -184,12 +189,13 @@ let createRestaurantHTML = (restaurant) => {
     more.innerHTML = 'View Details';
     more.className = 'alt=View Details of `${restaurant.name}`';
     more.className = 'tabindex="0"';
+    more.className = 'view-more-button';
     more.onclick = function () {
         const url = DBHelper.urlForRestaurant(restaurant);
         window.location = url;
     };
 
-    li.append(more)
+    li.append(more);
 
     return li
 }
