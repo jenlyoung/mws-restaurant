@@ -100,23 +100,6 @@ class DBHelper {
         });
     }
 
-    static fetchisFavoriteByRestaurantId(id){
-        let isFavoriteByRestarauntIdUrl =`${DBHelper.BASE_URL}/restaurants/${id}/?is_favorite=${is_favorite}`;
-
-        return fetch(isFavoriteByRestarauntIdUrl, {
-            method: 'GET'
-        }).then((response => {
-            if (response.status === 200) {
-                return response.json();
-            }
-        })).then(json => {
-            return json;
-        }).catch(e => {
-            return 'Error getting favorite';
-            //TODO: Research catch
-        });
-    }
-
     /**
      * Fetch restaurants by is favorite with proper error handling.
      */
@@ -271,10 +254,10 @@ class DBHelper {
 
         return fetch(url, {
             method: 'POST',
-            body: JSON.stringify(reviewData).then((res) => res.json())
-                .then((data) => console.log(data))
-                .catch((err) => console.log(err))
-        });
+            body: JSON.stringify(reviewData)
+        }).then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
     }
 }
 

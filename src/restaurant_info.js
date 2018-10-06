@@ -19,19 +19,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     initMap();
 
-    // let reviewForm = document.getElementById('review-form');
-    // reviewForm.addEventListener('submit', submitReview);
+    let reviewForm = document.getElementById('review-form');
+    reviewForm.addEventListener('submit', submitReview);
 
 });
 
 let submitReview = () => {
     event.preventDefault();
 
-    let name = document.getElementById('name-input').value;
-    let rating = document.getElementById('rating-input').value;
-    let comments = document.getElementById('comment-input').value;
+    let name = document.getElementById('name').value;
+    let rating = document.getElementById('user-rating').value;
+    let comments = document.getElementById('comment').value;
     const reviewData = {
-        restaurant_id: id,
+        restaurant_id: self.restaurant.id,
         name: name,
         rating: rating,
         comments: comments,
