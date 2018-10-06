@@ -277,9 +277,17 @@ nav h1 a:hover {
 
 .favorite-button {
     border: none;
-    color: #333333;
+    /*color: #333333;*/
     font-size: 20px;
     cursor: pointer;
+}
+
+.not-favorite {
+    color: #333333;
+}
+
+.is-favorite {
+    color: red;
 }
 
 .first {

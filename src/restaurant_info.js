@@ -91,6 +91,7 @@ let fetchRestaurantFromURL = (restaurant) => {
     DBHelper.fetchRestaurantById(id).then(restaurant => {
         self.restaurant = restaurant;
         fillRestaurantHTML();
+        colorIsFavoriteHeart();
 
         self.newMap = L.map('map', {
             center: [restaurant.latlng.lat, restaurant.latlng.lng],
@@ -231,4 +232,17 @@ let getParameterByName = (name, url) => {
     if (!results[2])
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+let colorIsFavoriteHeart = (favorite = self.restaurant.is_favorite) => {
+    const heart = document.getElementById('favorite-button');
+
+    if (favorite) {
+        heart.classList.add("is-favorite");
+    }
+
+    if (!favorite) {
+        heart.classList.remove("is-favorite");
+        heart.classList.add("not-favorite");
+    }
 }
