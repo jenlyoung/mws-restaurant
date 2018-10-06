@@ -18,60 +18,97 @@ document.addEventListener('DOMContentLoaded', (event) => {
         return;
     }
     initMap();
+
+    // let reviewForm = document.getElementById('review-form');
+    // reviewForm.addEventListener('submit', submitReview);
+
 });
 
+let submitReview = () => {
+    event.preventDefault();
+
+    let name = document.getElementById('name-input').value;
+    let rating = document.getElementById('rating-input').value;
+    let comments = document.getElementById('comment-input').value;
+    const reviewData = {
+        restaurant_id: id,
+        name: name,
+        rating: rating,
+        comments: comments,
+        createdAt: Date.now()
+    };
+
+    DBHelper.addReviewForRestaurant(reviewData).then(() => {
+        //TODO: Add to html
+    });
+
+};
 /**
  * Initialize leaflet map
  */
 let initMap = () => {
-    fetchRestaurantFromURL((error, restaurant) => {
-        if (error) { // Got an error!
-            console.error(error);
-        } else {
-            self.newMap = L.map('map', {
-                center: [restaurant.latlng.lat, restaurant.latlng.lng],
-                zoom: 16,
-                scrollWheelZoom: false
-            });
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-                mapboxToken: 'pk.eyJ1IjoiamVubHlvdW5nIiwiYSI6ImNqaWtjcXIxbDFxZ3QzanQxeHBlZDFlNnAifQ.y4x3BELwSLRnpiWlq0ljFQ',
-                maxZoom: 18,
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox.streets'
-
-            }).addTo(self.newMap);
-            fillBreadcrumb();
-            DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
-        }
-    });
+    fetchRestaurantFromURL();
 }
 
 
 /**
  * Get current restaurant from page URL.
  */
-let fetchRestaurantFromURL = (callback) => {
-    if (self.restaurant) { // restaurant already fetched!
-        callback(null, self.restaurant)
-        return;
-    }
+// let fetchRestaurantFromURL = (callback) => {
+//     if (self.restaurant) { // restaurant already fetched!
+//         callback(null, self.restaurant)
+//         return;
+//     }
+//     const id = getParameterByName('id');
+//     if (!id) { // no id found in URL
+//         let error = 'No restaurant id in URL';
+//         callback(error, null);
+//     } else {
+//         DBHelper.fetchRestaurantById(id, (error, restaurant) => {
+//             self.restaurant = restaurant;
+//             if (!restaurant) {
+//                 console.error(error);
+//                 return;
+//             }
+//             fillRestaurantHTML();
+//             callback(null, restaurant)
+//         });
+//     }
+// }
+
+let fetchRestaurantFromURL = (restaurant) => {
     const id = getParameterByName('id');
+
+    if (self.restaurant) { // restaurant already fetched!
+        return self.restaurant;
+    }
+
     if (!id) { // no id found in URL
         let error = 'No restaurant id in URL';
-        callback(error, null);
-    } else {
-        DBHelper.fetchRestaurantById(id, (error, restaurant) => {
-            self.restaurant = restaurant;
-            if (!restaurant) {
-                console.error(error);
-                return;
-            }
-            fillRestaurantHTML();
-            callback(null, restaurant)
-        });
+        return error;
     }
+
+    DBHelper.fetchRestaurantById(id).then(restaurant => {
+        self.restaurant = restaurant;
+        fillRestaurantHTML();
+
+        self.newMap = L.map('map', {
+            center: [restaurant.latlng.lat, restaurant.latlng.lng],
+            zoom: 16,
+            scrollWheelZoom: false
+        });
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
+            mapboxToken: 'pk.eyJ1IjoiamVubHlvdW5nIiwiYSI6ImNqaWtjcXIxbDFxZ3QzanQxeHBlZDFlNnAifQ.y4x3BELwSLRnpiWlq0ljFQ',
+            maxZoom: 18,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            id: 'mapbox.streets'
+
+        }).addTo(self.newMap);
+        fillBreadcrumb();
+        DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+    });
 }
 
 /**
@@ -97,7 +134,10 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
         fillRestaurantHoursHTML();
     }
     // fill reviews
-    fillReviewsHTML();
+    DBHelper.fetchReviewsByRestaurantId(self.restaurant.id)
+        .then(reviews => {
+            fillReviewsHTML(reviews);
+        });
 }
 
 /**
@@ -152,7 +192,7 @@ let createReviewHTML = (review) => {
     li.appendChild(name);
 
     const date = document.createElement('p');
-    date.innerHTML = review.date;
+    date.innerHTML = new Date(review.createdAt).toDateString();
     li.appendChild(date);
 
     const rating = document.createElement('p');

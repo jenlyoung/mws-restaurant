@@ -163,7 +163,10 @@ let createRestaurantHTML = (restaurant) => {
 
     const favorite = document.createElement('button');
     favorite.innerHTML = '<i class="fa fa-heart"></i>';
-    favorite.className = 'favorite-button';
+    favorite.className = 'first favorite-button';
+    favorite.onclick = function () {
+        favorite.toggleClass = 'selected';
+    };
     li.append(favorite);
 
     const image = document.createElement('img');
@@ -194,7 +197,6 @@ let createRestaurantHTML = (restaurant) => {
         const url = DBHelper.urlForRestaurant(restaurant);
         window.location = url;
     };
-
     li.append(more);
 
     return li

@@ -19,9 +19,9 @@ class DBHelper {
      * Database URL.
      * Change this to restaurants.json file location on your server.
      */
-    static get DATABASE_URL() {
+    static get BASE_URL() {
         const port = 1337; // Change this to your server port
-        return `http://localhost:${port}/restaurants`;
+        return `http://localhost:${port}`;
     }
 
     /**
@@ -32,14 +32,14 @@ class DBHelper {
 
         idbhelper.get('restaurants').then(value => {
             //if in the cache, it gets used
-            if(value){
+            if (value) {
                 const restaurants = value;
 
                 callback(null, restaurants);
-            // if not in cache, makes an http request and serves and stores in cache
+                // if not in cache, makes an http request and serves and stores in cache
             } else {
                 let xhr = new XMLHttpRequest();
-                xhr.open('GET', DBHelper.DATABASE_URL);
+                xhr.open('GET', `${DBHelper.BASE_URL}/restaurants`);
                 xhr.onload = () => {
                     if (xhr.status === 200) { // Got a success response from server!
                         const json = JSON.parse(xhr.responseText);
@@ -59,21 +59,69 @@ class DBHelper {
     /**
      * Fetch a restaurant by its ID.
      */
-    static fetchRestaurantById(id, callback) {
-        // fetch all restaurants with proper error handling.
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                const restaurant = restaurants.find(r => r.id == id);
-                if (restaurant) { // Got the restaurant
-                    callback(null, restaurant);
-                } else { // Restaurant does not exist in the database
-                    callback('Restaurant does not exist', null);
-                }
+    static fetchRestaurantById(id) {
+        //http://localhost:1337/restaurants/3
+        let restaurantByIdUrl = `${DBHelper.BASE_URL}/restaurants/${id}`;
+
+        return fetch(restaurantByIdUrl, {
+            method: 'GET'
+        }).then((response => {
+            if (response.status === 200) {
+                return response.json();
             }
+        })).then(json => {
+            return json;
+        }).catch(e => {
+            return 'Error getting reviews';
+            //TODO: Research catch
         });
     }
+
+
+    /**
+     * Fetch a reviews by its ID.
+     */
+    // http://localhost:1337/reviews/?restaurant_id=<restaurant_id>
+
+    static fetchReviewsByRestaurantId(id) {
+        let reviewByRestaurantIdUrl = `${DBHelper.BASE_URL}/reviews?restaurant_id=${id}`;
+
+        return fetch(reviewByRestaurantIdUrl, {
+            method: 'GET'
+        }).then((response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })).then(json => {
+            return json;
+        }).catch(e => {
+            return 'Error getting reviews';
+            //TODO: Research catch
+        });
+    }
+
+    /**
+     * Fetch restaurants by is favorite with proper error handling.
+     */
+    //http://localhost:1337/restaurants/?is_favorite=true
+
+    static fetchRestaurantByIsFavorite(is_favorite) {
+        let RestaurantsByIsFavoriteUrl = `${DBHelper.BASE_URL}/restaurants/?is_favorite=${is_favorite}`;
+
+        return fetch(RestaurantsByIsFavoriteUrl, {
+            method: 'GET'
+        }).then((response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        })).then(json => {
+            return json;
+        }).catch(e => {
+            return 'Error getting reviews';
+            //TODO: Research catch
+        });
+    }
+
 
     /**
      * Fetch restaurants by a cuisine type with proper error handling.
@@ -198,7 +246,23 @@ class DBHelper {
         marker.addTo(map);
         return marker;
     }
+
+
+    static addReviewForRestaurant(reviewData) {
+
+        let url = `${DBHelper.BASE_URL}/reviews`;
+
+        return fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(reviewData).then((res) => res.json())
+                .then((data) => console.log(data))
+                .catch((err) => console.log(err))
+        });
+    }
 }
+
+//new comment
+
 
 export default DBHelper;
 

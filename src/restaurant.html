@@ -2,68 +2,102 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#444444"/>
-  <!--<link rel="manifest" href="/manifest.json"/>-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#444444"/>
+    <!--<link rel="manifest" href="/manifest.json"/>-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-  <title>Restaurant Info</title>
+    <title>Restaurant Info</title>
 </head>
 
 <body class="inside">
-  <!-- Beginning header -->
-  <header>
+<!-- Beginning header -->
+<header>
     <!-- Beginning nav -->
     <nav>
-      <h1><a href="/" tabindex="0">Restaurant Reviews</a></h1>
+        <h1><a href="/" tabindex="0">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
     <nav aria-label="Breadcrumb" class="breadcrumb">
-      <ul id="breadcrumb">
-        <li class="home-button"><a href="/" tabindex="0">Home</a></li>
-      </ul>
+        <ul id="breadcrumb">
+            <li class="home-button"><a href="/" tabindex="0">Home</a></li>
+        </ul>
     </nav>
     <!-- End breadcrumb -->
     <!-- End nav -->
-  </header>
-  <!-- End header -->
+</header>
+<!-- End header -->
 
-  <!-- Beginning main -->
-  <main id="maincontent">
+<!-- Beginning main -->
+<main id="maincontent">
     <section>
         <img id="restaurant-img">
     </section>
     <section id="restaurant-header">
-      <button class="inside favorite-button"><i class="fa fa-heart"></i></button>
-      <h2 id="restaurant-name" tabindex="0"></h2>
+        <button class="inside favorite-button"><i class="fa fa-heart"></i></button>
+        <h2 id="restaurant-name" tabindex="0"></h2>
     </section>
-     <!--Beginning map-->
+    <!--Beginning map-->
     <section id="map-container" aria-label="restaurant location map" role="application">
-      <div id="map" alt=""></div>
+        <div id="map" alt=""></div>
     </section>
-     <!--End map-->
+    <!--End map-->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h3 id="general-info">Cuisine, Hours and Location</h3>
-      <p id="restaurant-cuisine"></p>
-      <p id="restaurant-address"></p>
-      <table id="restaurant-hours"></table>
+        <h3 id="general-info">Cuisine, Hours and Location</h3>
+        <p id="restaurant-cuisine"></p>
+        <p id="restaurant-address"></p>
+        <table id="restaurant-hours"></table>
     </section>
     <!-- end restaurant -->
+
+    <!-- beginning review form -->
+    <section id="form-container">
+        <h3 class="form-title">Write a Review</h3><br>
+        <form id="review-form" action="">
+            <div id="name-input">
+                <label class="form-label" for="name">Name</label><br>
+                <input type="text" id="name" name="name" placeholder="Your name..">
+            </div>
+            <div id="rating-input">
+                <label class="form-label" for="rating">Rating</label><br>
+                <div id="rating">
+                    <select id="user-rating" name="rating" aria-label="User rating selections">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+            <div id="comment-input">
+                <label class="form-label" for="comment">Comments</label><br>
+                <textarea id="comment" name="comment" placeholder="Write something.."></textarea>
+            </div>
+            <div id="submit-button">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </section>
+    <!-- end review form -->
+
+
+
     <!-- Beginning reviews -->
     <section id="reviews-container">
-      <ul id="reviews-list"></ul>
+        <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
-  </main>
-  <!-- End main -->
+</main>
+<!-- End main -->
 
-  <!-- Beginning footer -->
-  <footer id="footer">
+<!-- Beginning footer -->
+<footer id="footer">
     Copyright (c) 2017 <a href="/" tabindex="0"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-  </footer>
-  <!-- End footer -->
+</footer>
+<!-- End footer -->
 </body>
 
 </html>
