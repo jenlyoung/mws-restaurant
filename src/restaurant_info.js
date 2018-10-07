@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let reviewForm = document.getElementById('review-form');
     reviewForm.addEventListener('submit', submitReview);
 
+    let favoriteButton = document.getElementById('favorite-button');
+    favoriteButton.addEventListener('click', toggleFavoriteStatus);
+
 });
 
 let submitReview = () => {
@@ -43,6 +46,21 @@ let submitReview = () => {
     });
 
 };
+
+let toggleFavoriteStatus = () => {
+    //Have to do this because the API changes the bool to a string
+    self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
+
+    DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite).then(success=>{
+        if(!success){
+            //Have to do this because the API changes the bool to a string
+            self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
+        }
+
+        colorIsFavoriteHeart();
+    });
+}
+
 /**
  * Initialize leaflet map
  */
@@ -54,27 +72,6 @@ let initMap = () => {
 /**
  * Get current restaurant from page URL.
  */
-// let fetchRestaurantFromURL = (callback) => {
-//     if (self.restaurant) { // restaurant already fetched!
-//         callback(null, self.restaurant)
-//         return;
-//     }
-//     const id = getParameterByName('id');
-//     if (!id) { // no id found in URL
-//         let error = 'No restaurant id in URL';
-//         callback(error, null);
-//     } else {
-//         DBHelper.fetchRestaurantById(id, (error, restaurant) => {
-//             self.restaurant = restaurant;
-//             if (!restaurant) {
-//                 console.error(error);
-//                 return;
-//             }
-//             fillRestaurantHTML();
-//             callback(null, restaurant)
-//         });
-//     }
-// }
 
 let fetchRestaurantFromURL = (restaurant) => {
     const id = getParameterByName('id');
@@ -237,11 +234,13 @@ let getParameterByName = (name, url) => {
 let colorIsFavoriteHeart = (favorite = self.restaurant.is_favorite) => {
     const heart = document.getElementById('favorite-button');
 
-    if (favorite) {
+    //Have to do this because the API changes the bool to a string
+    if (favorite == "true") {
         heart.classList.add("is-favorite");
     }
 
-    if (!favorite) {
+    //Have to do this because the API changes the bool to a string
+    if (favorite == "false") {
         heart.classList.remove("is-favorite");
         heart.classList.add("not-favorite");
     }

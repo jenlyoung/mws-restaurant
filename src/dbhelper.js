@@ -259,6 +259,18 @@ class DBHelper {
             .then((data) => console.log(data))
             .catch((err) => console.log(err));
     }
+
+    static toggleIsFavoriteStatus(id, isFavorite) {
+        let url = `${DBHelper.BASE_URL}/restaurants/${id}/?is_favorite=${isFavorite}`;
+
+        return fetch(url, {
+            method: 'PUT',
+        }).then(response=>{
+            return response.status === 200;
+        }).catch(e=>{
+           return false;
+        });
+    }
 }
 
 //new comment

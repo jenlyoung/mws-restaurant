@@ -16,8 +16,8 @@ module.exports = {
         index: './src/index.js',
         restaurant: './src/restaurant_info.js'
     },
-    mode: 'production',
-    devtool: 'source-map',
+    mode: 'development',
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist'
     },
