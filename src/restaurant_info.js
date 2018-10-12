@@ -48,10 +48,9 @@ let submitReview = () => {
     DBHelper.addReviewForRestaurant(reviewData)
         .then(() => {
         //TODO: Add to html
-            DBHelper.fetchReviewsByRestaurantId(self.restaurant.id)
-                .then(reviews => {
-                    fillReviewsHTML(reviews);
-                });
+            addNewReviewHTML(reviewData);
+    }).then (() =>{
+        document.forms["review-form"].reset();
     });
 
 };
@@ -152,6 +151,8 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
         });
 }
 
+
+
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
@@ -189,6 +190,14 @@ let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     reviews.forEach(review => {
         ul.appendChild(createReviewHTML(review));
     });
+    container.appendChild(ul);
+}
+
+let addNewReviewHTML = (review = self.restaurant.review) => {
+    const container = document.getElementById('reviews-container');
+    const ul = document.getElementById('reviews-list');
+
+    ul.appendChild(createReviewHTML(review));
     container.appendChild(ul);
 }
 
