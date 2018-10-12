@@ -31,8 +31,12 @@ let submitReview = () => {
     event.preventDefault();
 
     let name = document.getElementById('name').value;
-    let rating = document.getElementById('user-rating').value;
+    // let rating = document.getElementBy('user-rating').value;
     let comments = document.getElementById('comment').value;
+
+    let rating = document.querySelector('input[name="rating"]:checked').value;
+
+
     const reviewData = {
         restaurant_id: self.restaurant.id,
         name: name,
@@ -41,8 +45,13 @@ let submitReview = () => {
         createdAt: Date.now()
     };
 
-    DBHelper.addReviewForRestaurant(reviewData).then(() => {
+    DBHelper.addReviewForRestaurant(reviewData)
+        .then(() => {
         //TODO: Add to html
+            DBHelper.fetchReviewsByRestaurantId(self.restaurant.id)
+                .then(reviews => {
+                    fillReviewsHTML(reviews);
+                });
     });
 
 };
@@ -113,17 +122,22 @@ let fetchRestaurantFromURL = (restaurant) => {
  * Create restaurant HTML and add it to the webpage
  */
 let fillRestaurantHTML = (restaurant = self.restaurant) => {
+
+    //fill restaurant name
     const name = document.getElementById('restaurant-name');
     name.innerHTML = restaurant.name;
 
+    //fill address
     const address = document.getElementById('restaurant-address');
     address.innerHTML = restaurant.address;
 
+    //fill image
     const image = document.getElementById('restaurant-img');
     image.className = 'restaurant-img';
     image.srcset = DBHelper.imageUrlForRestaurant(restaurant);
     image.alt = `Image from the restaurant ${restaurant.name}`;
 
+    //fill cuisine
     const cuisine = document.getElementById('restaurant-cuisine');
     cuisine.innerHTML = restaurant.cuisine_type;
 
@@ -163,9 +177,7 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
  */
 let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     const container = document.getElementById('reviews-container');
-    const title = document.createElement('h3');
-    title.innerHTML = 'Reviews';
-    container.appendChild(title);
+
 
     if (!reviews) {
         const noReviews = document.createElement('p');

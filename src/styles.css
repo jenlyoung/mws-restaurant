@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display: block;
+    /*display: block;*/
     width: 100%;
 }
 
@@ -70,52 +70,60 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 /* ====================== Title ====================== */
-nav {
-    width: 100%;
+.title-container {
+    max-width: 100%;
     height: auto;
     background-color: #252831;
-    text-align: center;
     display: flex;
-    align-items: center;
+    text-align: center;
 }
 
-nav h1 {
+.title {
     width: 100%;
-    margin: 15px;
+    margin: 0;
+    padding: 20px 0 10px 0;
 }
 
-nav h1 a {
+.title a {
     color: #fff;
     font-size: 20px;
     font-weight: 200;
     letter-spacing: 5px;
     text-transform: uppercase;
     text-decoration: none;
+    text-align: center;
+
 }
 
-nav h1 a:focus {
+.title a:focus {
     color: #3397db;
     text-decoration: underline;
 }
 
-nav h1 a:hover {
+.title a:hover {
     color: #3397db;
     text-decoration: underline;
 }
 
-#breadcrumb, .breadcrumb {
+/* ====================== Title ====================== */
+
+
+.breadcrumb {
     padding: 10px 0;
     list-style: none;
     background-color: #eee;
     margin: 0;
-    max-width: 100%
+    max-width: 100%;
+    /*border: 1px solid red;*/
+    display: flex;
+    flex-direction: row;
 }
 
 /* Display list items side by side */
 #breadcrumb li {
     display: inline;
     font-size: 17px;
-    padding: 13px 0 13px 10px;
+    padding: 7px 0 13px 10px;
 }
 
 /* Add a slash symbol (/) before/behind each list item */
@@ -261,18 +269,26 @@ nav h1 a:hover {
 .inside #maincontent {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
+
+}
+
+.inside nav {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
 }
 
 .inside header {
     top: 0;
-    width: 100%;
-    justify-content: left;
+    max-width: 100%;
+    /*justify-content: left;*/
 }
 
 .inside #restaurant-header {
     display: flex;
     flex-flow: row wrap;
-    width: 100%;
+    /*border: 5px solid red ;*/
 }
 
 .favorite-button {
@@ -280,6 +296,7 @@ nav h1 a:hover {
     /*color: #333333;*/
     font-size: 20px;
     cursor: pointer;
+    /*border-radius: 75px;*/
 }
 
 .not-favorite {
@@ -287,7 +304,7 @@ nav h1 a:hover {
 }
 
 .is-favorite {
-    color: red;
+    color: #c15300;
 }
 
 .first {
@@ -399,6 +416,7 @@ nav h1 a:hover {
     padding: 10px 0 0 0;
     width: 100%;
     margin: 10px;
+    /*border: 1px solid red;*/
 }
 
 #reviews-list {
@@ -432,14 +450,21 @@ nav h1 a:hover {
     margin-bottom: 10px;
 }
 
-/*review form*/
+/* ====================== Restaurant Reviews ====================== */
+#form-container {
+    /*border: 1px solid red;*/
+}
 
 #review-form {
     background-color: #fff;
     border: 2px solid #f3f3f3;
-    padding: 10px;
-    max-width: 50%;
-    margin-bottom: 10px;
+    display: block;
+    list-style-type: none;
+    margin: 0 0 30px;
+    overflow: hidden;
+    padding: 5px 20px 5px;
+    position: relative;
+    width: 85%;
 }
 
 .form-title {
@@ -458,7 +483,7 @@ nav h1 a:hover {
 }
 
 input[type=text], textarea {
-    max-width: 100%;
+    width: 100% ;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -472,7 +497,9 @@ input[type=text], textarea {
     background-color: white;
     margin-top: 6px;
     margin-bottom: 16px;
-    width: 80px;
+    width: 40px;
+    height: 40px;
+    text-indent: 5px;
 }
 
 input[type=submit] {
@@ -487,15 +514,18 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #33a7ff;
 }
 
-/*.container {*/
-    /*border-radius: 5px;*/
-    /*background-color: #f2f2f2;*/
-    /*padding: 20px;*/
-/*}*/
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px 0 10px;
+}
 
+#rating {
+    padding: 10px;
+}
 
 
 /*!* ====================== Media Queries ====================== *!*/

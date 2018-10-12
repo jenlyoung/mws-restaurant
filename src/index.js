@@ -9,6 +9,7 @@ registerServiceWorker();
 
 
 let restaurants,
+    restaurant,
     neighborhoods,
     cuisines;
 let newMap;
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     initMap(); // added
     fetchNeighborhoods();
     fetchCuisines();
+
 });
 
 /**
@@ -165,7 +167,7 @@ let createRestaurantHTML = (restaurant) => {
     favorite.innerHTML = '<i class="fa fa-heart"></i>';
     favorite.className = 'first favorite-button';
     favorite.onclick = function () {
-        favorite.toggleClass = 'selected';
+        toggleFavoriteStatus();
     };
     li.append(favorite);
 
@@ -217,6 +219,34 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
 
         self.markers.push(marker);
     });
+}
+//
+let toggleFavoriteStatus = () => {
+    //Have to do this because the API changes the bool to a string
+    self.restaurant.is_favorite = (!(self.restaurant.is_favorite === "true")).toString();
 
+    DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite).then(success=>{
+        if(!success){
+            //Have to do this because the API changes the bool to a string
+            self.restaurant.is_favorite = (!(self.restaurant.is_favorite === "true")).toString();
+        }
+
+        colorIsFavoriteHeart();
+    });
+}
+
+let colorIsFavoriteHeart = (favorite = self.restaurant.is_favorite) => {
+    const heart = document.getElementById('favorite-button');
+
+    //Have to do this because the API changes the bool to a string
+    if (favorite == "true") {
+        heart.classList.add("is-favorite");
+    }
+
+    //Have to do this because the API changes the bool to a string
+    if (favorite == "false") {
+        heart.classList.remove("is-favorite");
+        heart.classList.add("not-favorite");
+    }
 }
 

@@ -14,21 +14,21 @@
 
 <body class="inside">
 <!-- Beginning header -->
-<header>
-    <!-- Beginning nav -->
-    <nav>
-        <h1><a href="/" tabindex="0">Restaurant Reviews</a></h1>
-    </nav>
-    <!-- Beginning breadcrumb -->
-    <nav aria-label="Breadcrumb" class="breadcrumb">
-        <ul id="breadcrumb">
-            <li class="home-button"><a href="/" tabindex="0">Home</a></li>
-        </ul>
-    </nav>
-    <!-- End breadcrumb -->
-    <!-- End nav -->
+
+<header class="title-container">
+    <a href="#filter-container" class="skip-link" tabindex="0">Skip to Filter Results</a>
+    <h1 class="title"><a href="/" tabindex="0">Restaurant Reviews</a></h1>
 </header>
-<!-- End header -->
+
+<!-- Beginning breadcrumb -->
+<nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul id="breadcrumb">
+        <li class="home-button"><a href="/" tabindex="0">Home</a></li>
+    </ul>
+</nav>
+<!-- End breadcrumb -->
+
+
 
 <!-- Beginning main -->
 <main id="maincontent">
@@ -64,12 +64,18 @@
             <div id="rating-input">
                 <label class="form-label" for="rating">Rating</label><br>
                 <div id="rating">
-                    <select id="user-rating" name="rating" aria-label="User rating selections">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
+                    <!--<select id="user-rating" name="rating" aria-label="User rating selections">-->
+                        <!--<option value="1">1</option>-->
+                        <!--<option value="2">2</option>-->
+                        <!--<option value="3">3</option>-->
+                        <!--<option value="4">4</option>-->
+                    <!--</select>-->
+                    <input type="radio" name="rating" value="1" checked> 1
+                    <input type="radio" name="rating" value="2" checked> 2
+                    <input type="radio" name="rating" value="3" checked> 3
+                    <input type="radio" name="rating" value="4" checked> 4
+                    <input type="radio" name="rating" value="5" checked> 5
+
                 </div>
             </div>
             <div id="comment-input">
@@ -84,9 +90,9 @@
     <!-- end review form -->
 
 
-
     <!-- Beginning reviews -->
     <section id="reviews-container">
+        <h3>Reviews</h3>
         <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
