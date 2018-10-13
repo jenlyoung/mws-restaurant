@@ -9,7 +9,6 @@ registerServiceWorker();
 
 
 let restaurants,
-    restaurant,
     neighborhoods,
     cuisines;
 let newMap;
@@ -160,12 +159,13 @@ let fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 let createRestaurantHTML = (restaurant) => {
+    //creates individual restaurant cards
     const li = document.createElement('li');
 
+    //create favorite button and add click event that changes color and value
     const favorite = document.createElement('button');
     favorite.innerHTML = '<i class="fa fa-heart"></i>';
     favorite.className = 'first favorite-button not-favorite';
-
     favorite.onclick = function (e) {
 
         toggleFavoriteOnClick(restaurant);
@@ -179,9 +179,9 @@ let createRestaurantHTML = (restaurant) => {
             favorite.className = 'first favorite-button not-favorite';
         }
     };
-
     li.append(favorite);
 
+    //creates image
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     image.alt = `Image from the restaurant ${restaurant.name}`;
@@ -189,9 +189,12 @@ let createRestaurantHTML = (restaurant) => {
     image.src = DBHelper.imageThumnailUrlForRestaurant(restaurant);
     li.append(image);
 
+    //create restaurant name
     const name = document.createElement('h3');
     name.innerHTML = restaurant.name;
     li.append(name);
+
+    //create neighborhood and address
 
     const neighborhood = document.createElement('p');
     neighborhood.innerHTML = restaurant.neighborhood;
@@ -201,6 +204,7 @@ let createRestaurantHTML = (restaurant) => {
     address.innerHTML = restaurant.address;
     li.append(address);
 
+    //view details button
     const more = document.createElement('button');
     more.innerHTML = 'View Details';
     more.className = 'alt=View Details of `${restaurant.name}`';
@@ -211,7 +215,6 @@ let createRestaurantHTML = (restaurant) => {
         window.location = url;
     };
     li.append(more);
-
     return li
 }
 
@@ -233,7 +236,9 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
 }
 
 
-
+/**
+ * Toggles the value of the favorite button
+ */
 let toggleFavoriteOnClick = (restaurant = self.restaurants) => {
 
     restaurant.is_favorite = (!(restaurant.is_favorite == "true")).toString();
@@ -241,23 +246,5 @@ let toggleFavoriteOnClick = (restaurant = self.restaurants) => {
     let id = restaurant.id;
 
     DBHelper.toggleIsFavoriteStatus(id, restaurant.is_favorite);
-
-
-
 }
 
-let colorIsFavoriteHeart = (restaurant = self.restaurants) => {
-    const heart = document.getElementsByClassName('first favorite-button');
-    console.log(heart);
-
-    //Have to do this because the API changes the bool to a string
-    if (!(restaurant.is_favorite)) {
-        heart.class = 'first-favorite-button is-favorite';
-    }
-
-    //Have to do this because the API changes the bool to a string
-    if ((restaurant.is_favorite)) {
-        heart.classList.remove("is-favorite");
-        heart.classList.add("not-favorite");
-    }
-}

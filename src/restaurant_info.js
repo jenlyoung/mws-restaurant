@@ -19,23 +19,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     initMap();
 
-    let reviewForm = document.getElementById('review-form');
-    reviewForm.addEventListener('submit', submitReview);
-
+    //event listener for favorite button toggle
     let favoriteButton = document.getElementById('favorite-button');
     favoriteButton.addEventListener('click', toggleFavoriteStatus);
 
+    //event listener for submit button on review form
+    let reviewForm = document.getElementById('review-form');
+    reviewForm.addEventListener('submit', submitReview);
 });
 
+/**
+ * Grabs values from review form, adds them to database, displays on html and clears form
+ */
+
 let submitReview = () => {
+    //prevent multiple submits
     event.preventDefault();
 
+    //grab values and put then in json
     let name = document.getElementById('name').value;
-    // let rating = document.getElementBy('user-rating').value;
     let comments = document.getElementById('comment').value;
-
     let rating = document.querySelector('input[name="rating"]:checked').value;
-
 
     const reviewData = {
         restaurant_id: self.restaurant.id,
@@ -45,27 +49,34 @@ let submitReview = () => {
         createdAt: Date.now()
     };
 
+    //fetch review data, put in database, add to html and then reset input boxes
     DBHelper.addReviewForRestaurant(reviewData)
         .then(() => {
-        //TODO: Add to html
             addNewReviewHTML(reviewData);
-    }).then (() =>{
+    })
+        .then (() =>{
         document.forms["review-form"].reset();
     });
 
 };
 
+/**
+ * Toggle value of is-favorite button in database and the color
+ */
+
 let toggleFavoriteStatus = () => {
-    //Have to do this because the API changes the bool to a string
+    //Have to do .toString() because the API changes the bool to a string
+    //toggles is_favorite status
     self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
 
+    //toggles status in database
     DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite)
+        //if something is wrong with the api it will just set it back
         .then(success=>{
         if(!success){
             //Have to do this because the API changes the bool to a string
             self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
         }
-
         colorIsFavoriteHeart();
     });
 }
@@ -252,6 +263,10 @@ let getParameterByName = (name, url) => {
         return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+/**
+ * changes color of the heart on the second page based on value of is_favorite value
+ */
 
 let colorIsFavoriteHeart = (favorite = self.restaurant.is_favorite) => {
     const heart = document.getElementById('favorite-button');
