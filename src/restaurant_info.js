@@ -59,7 +59,8 @@ let toggleFavoriteStatus = () => {
     //Have to do this because the API changes the bool to a string
     self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
 
-    DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite).then(success=>{
+    DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite)
+        .then(success=>{
         if(!success){
             //Have to do this because the API changes the bool to a string
             self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();

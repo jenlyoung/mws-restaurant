@@ -32,6 +32,8 @@ class DBHelper {
 
         idbhelper.get('restaurants').then(value => {
             //if in the cache, it gets used
+            //TODO: BYPASSING CACHE
+            value = null;
             if (value) {
                 const restaurants = value;
 
@@ -271,7 +273,10 @@ class DBHelper {
            return false;
         });
     }
+
 }
+
+
 
 //new comment
 

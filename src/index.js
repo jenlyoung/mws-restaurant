@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     initMap(); // added
     fetchNeighborhoods();
     fetchCuisines();
-
 });
 
 /**
@@ -165,10 +164,22 @@ let createRestaurantHTML = (restaurant) => {
 
     const favorite = document.createElement('button');
     favorite.innerHTML = '<i class="fa fa-heart"></i>';
-    favorite.className = 'first favorite-button';
-    favorite.onclick = function () {
-        toggleFavoriteStatus();
+    favorite.className = 'first favorite-button not-favorite';
+
+    favorite.onclick = function (e) {
+
+        toggleFavoriteOnClick(restaurant);
+
+        //Have to do this because the API changes the bool to a string
+        restaurant.is_favorite = (restaurant.is_favorite == "true").toString();
+
+        if (restaurant.is_favorite==="true") {
+            favorite.className = 'first favorite-button is-favorite';
+        } else {
+            favorite.className = 'first favorite-button not-favorite';
+        }
     };
+
     li.append(favorite);
 
     const image = document.createElement('img');
@@ -220,33 +231,33 @@ let addMarkersToMap = (restaurants = self.restaurants) => {
         self.markers.push(marker);
     });
 }
-//
-let toggleFavoriteStatus = () => {
-    //Have to do this because the API changes the bool to a string
-    self.restaurant.is_favorite = (!(self.restaurant.is_favorite === "true")).toString();
 
-    DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite).then(success=>{
-        if(!success){
-            //Have to do this because the API changes the bool to a string
-            self.restaurant.is_favorite = (!(self.restaurant.is_favorite === "true")).toString();
-        }
 
-        colorIsFavoriteHeart();
-    });
+
+let toggleFavoriteOnClick = (restaurant = self.restaurants) => {
+
+    restaurant.is_favorite = (!(restaurant.is_favorite == "true")).toString();
+
+    let id = restaurant.id;
+
+    DBHelper.toggleIsFavoriteStatus(id, restaurant.is_favorite);
+
+
+
 }
 
-let colorIsFavoriteHeart = (favorite = self.restaurant.is_favorite) => {
-    const heart = document.getElementById('favorite-button');
+let colorIsFavoriteHeart = (restaurant = self.restaurants) => {
+    const heart = document.getElementsByClassName('first favorite-button');
+    console.log(heart);
 
     //Have to do this because the API changes the bool to a string
-    if (favorite == "true") {
-        heart.classList.add("is-favorite");
+    if (!(restaurant.is_favorite)) {
+        heart.class = 'first-favorite-button is-favorite';
     }
 
     //Have to do this because the API changes the bool to a string
-    if (favorite == "false") {
+    if ((restaurant.is_favorite)) {
         heart.classList.remove("is-favorite");
         heart.classList.add("not-favorite");
     }
 }
-

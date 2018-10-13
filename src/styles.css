@@ -7,6 +7,10 @@ object, video {
     max-width: 100%;
 }
 
+/** {*/
+    /*border: 1px solid red;*/
+/*}*/
+
 body, td, th, p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
@@ -315,7 +319,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 .inside {
     background-color: #f3f3f3;
-    margin: 5px 0 5px 10px;
+    /*margin: 5px 0 5px 10px;*/
 }
 
 .selected {
