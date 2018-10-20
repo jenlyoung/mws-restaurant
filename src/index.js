@@ -21,24 +21,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if(window.location.pathname !== '/index.html' && window.location.pathname !== '/'){
         return;
     }
+
+    //testing online and offline
+    function updateOnlineStatus(event){
+        if (window.navigator.onLine){
+            DBHelper.setOnline();
+        } else {
+            DBHelper.setOffline();
+        }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+
     document.querySelector('select[name="neighborhoods"]').onchange=updateRestaurants;
     document.querySelector('select[name="cuisines"]').onchange=updateRestaurants;
     initMap(); // added
     fetchNeighborhoods();
     fetchCuisines();
+
 });
 
 /**
  * Fetch all neighborhoods and set their HTML.
  */
 let fetchNeighborhoods = () => {
-    DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-        if (error) { // Got an error
-            console.error(error);
-        } else {
-            self.neighborhoods = neighborhoods;
-            fillNeighborhoodsHTML();
-        }
+    DBHelper.fetchNeighborhoods().then (neighborhoods => {
+        self.neighborhoods = neighborhoods;
+        fillNeighborhoodsHTML();
     });
 }
 
@@ -59,13 +69,9 @@ let fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
  * Fetch all cuisines and set their HTML.
  */
 let fetchCuisines = () => {
-    DBHelper.fetchCuisines((error, cuisines) => {
-        if (error) { // Got an error!
-            console.error(error);
-        } else {
-            self.cuisines = cuisines;
-            fillCuisinesHTML();
-        }
+    DBHelper.fetchCuisines().then (cuisines => {
+        self.cuisines = cuisines;
+        fillCuisinesHTML();
     });
 }
 
@@ -117,14 +123,10 @@ let updateRestaurants = () => {
     const cuisine = cSelect[cIndex].value;
     const neighborhood = nSelect[nIndex].value;
 
-    DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-        if (error) { // Got an error!
-            console.error(error);
-        } else {
-            resetRestaurants(restaurants);
-            fillRestaurantsHTML();
-        }
-    })
+    DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine,neighborhood).then(restaurants =>{
+        resetRestaurants(restaurants);
+        fillRestaurantsHTML();
+    });
 }
 
 /**
@@ -165,7 +167,12 @@ let createRestaurantHTML = (restaurant) => {
     //create favorite button and add click event that changes color and value
     const favorite = document.createElement('button');
     favorite.innerHTML = '<i class="fa fa-heart"></i>';
-    favorite.className = 'first favorite-button not-favorite';
+    let initialClassName = 'first favorite-button';
+
+    initialClassName += restaurant.is_favorite == "true" ? ' is-favorite' : ' not-favorite';
+
+    favorite.className = initialClassName;
+
     favorite.onclick = function (e) {
 
         toggleFavoriteOnClick(restaurant);
