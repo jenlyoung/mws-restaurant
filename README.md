@@ -24,7 +24,7 @@ I chose to learn webpack, a static module bundler, for this project to optimize 
     ```
 
 ## Client Application
- 1. Clone the [client repository](https://github.com/jenlyoung/mws-restaurant-stage-2-client.git)
+ 1. Clone the [client repository](https://github.com/jenlyoung/mws-restaurant.git)
  2. Install project dependencies
      ```
      npm i
@@ -39,4 +39,8 @@ I chose to learn webpack, a static module bundler, for this project to optimize 
 ## Performance
 
  <img src="index-performance.png" />
+ 
+## Contributions
+
+ * Aria Radio Buttons - https://www.w3.org/TR/wai-aria-practices/examples/radio/radio-1/radio-1.html
  
