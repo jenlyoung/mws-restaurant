@@ -261,8 +261,7 @@ class DBHelper {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
-                    idbhelper.delete(`restaurants-reviews:${reviewData.id}`)
+                    idbhelper.delete(`restaurants-reviews:${reviewData.restaurant_id}`)
                 })
                 .catch((err) => console.log(err));
         }

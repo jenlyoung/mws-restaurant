@@ -20,7 +20,14 @@ const idbhelper = {
             tx.objectStore(objectStoreName).put(val, key);
             return tx.complete;
         });
-    }
+    },
+    delete(key) {
+        return dbPromise.then(db => {
+            const tx = db.transaction(objectStoreName, 'readwrite');
+            tx.objectStore(objectStoreName).delete(key);
+            return tx.complete;
+        });
+    },
 };
 
 export default idbhelper;
