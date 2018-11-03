@@ -27,7 +27,7 @@ class DBHelper {
         return `http://localhost:${port}`;
     }
 
-    //c
+    //says that the site is online
     static get isOnline() {
         return this.online || window.navigator.onLine;
     }
@@ -53,11 +53,12 @@ class DBHelper {
                         return response.json();
                     }
                 })).then(json => {
+                    //caching restaurants
                     idbhelper.set('restaurants', json);
+                    //returning restaurants
                     return json;
                 }).catch(e => {
                     return 'Error getting reviews';
-                    //TODO: Research catch
                 });
             }
         });
@@ -73,7 +74,6 @@ class DBHelper {
                 return restaurants.find(value => value.id == id);
             });
     }
-
 
     /**
      * Fetch a reviews by its ID.
@@ -98,73 +98,17 @@ class DBHelper {
                         return response.json();
                     }
                 })).then(json => {
-                    return json;
-                }).then(json => {
+                    //caching the reviews
                     idbhelper.set(`restaurants-reviews:${id}`, json);
+                    //returning reviews
                     return json;
                 }).catch(e => {
                     return 'Error getting reviews';
-                    //TODO: Research catch
                 });
             }
         });
     }
 
-    /**
-     * Fetch restaurants by is favorite with proper error handling.
-     */
-    //http://localhost:1337/restaurants/?is_favorite=true
-
-    static fetchRestaurantByIsFavorite(is_favorite) {
-        let RestaurantsByIsFavoriteUrl = `${DBHelper.BASE_URL}/restaurants/?is_favorite=${is_favorite}`;
-
-        return fetch(RestaurantsByIsFavoriteUrl, {
-            method: 'GET'
-        }).then((response => {
-            if (response.status === 200) {
-                return response.json();
-            }
-        })).then(json => {
-            return json;
-        }).catch(e => {
-            return 'Error getting reviews';
-            //TODO: Research catch
-        });
-    }
-
-
-    /**
-     * Fetch restaurants by a cuisine type with proper error handling.
-     */
-    /*static fetchRestaurantByCuisine(cuisine, callback) {
-        // Fetch all restaurants  with proper error handling
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Filter restaurants to have only given cuisine type
-                const results = restaurants.filter(r => r.cuisine_type == cuisine);
-                callback(null, results);
-            }
-        });
-    }*/
-
-    /**
-     * Fetch restaurants by a neighborhood with proper error handling.
-     */
-
-    /*static fetchRestaurantByNeighborhood(neighborhood, callback) {
-        // Fetch all restaurants
-        DBHelper.fetchRestaurants((error, restaurants) => {
-            if (error) {
-                callback(error, null);
-            } else {
-                // Filter restaurants to have only given neighborhood
-                const results = restaurants.filter(r => r.neighborhood == neighborhood);
-                callback(null, results);
-            }
-        });
-    }*/
 
     /**
      * Fetch restaurants by a cuisine and a neighborhood with proper error handling.
@@ -261,11 +205,13 @@ class DBHelper {
             })
                 .then((res) => res.json())
                 .then((data) => {
+                    //delete cache so that the next call gets fresh data
                     idbhelper.delete(`restaurants-reviews:${reviewData.restaurant_id}`)
                 })
                 .catch((err) => console.log(err));
         }
         else {
+            //temporary storage for the reviews when offline
             return idbhelper.get('offline-review').then(value => {
                 let all = value || [];
                 all.push({
@@ -283,11 +229,15 @@ class DBHelper {
                 method: 'PUT',
             }).then(response => {
                 return response.status === 200;
+            }).then((data) => {
+                //delete cache so that the next call gets fresh data
+                idbhelper.delete("restaurants");
             }).catch(e => {
                 return false;
             });
         }
         else {
+            //temp storage for favorite status
             return idbhelper.get('offline-favorite').then(value => {
                 let all = value || [];
                 all.push({
@@ -333,13 +283,7 @@ class DBHelper {
 
         DBHelper.syncOfflineData();
     }
-
-
 }
-
-
-//new comment
-
 
 export default DBHelper;
 

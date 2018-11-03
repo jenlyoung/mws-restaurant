@@ -1,15 +1,15 @@
-# Restaurant Reviews App--Stage 2
+# Restaurant Reviews App--Stage 3
 
 ## Project Description
 
-This project is the second project for the Mobile Web Specialist Nanodegree. The goal of this project was to connect to an external server using asynchronous JavaScript to request JSON data from the server. The data received from the server is then stored  in an offline database using IndexedDB, which will create an app shell architecture.
+This project is the final project for the Mobile Web Specialist Nanodegree. The goal of this project was to connect to an external server using asynchronous JavaScript to request JSON data from the server. The data received from the server is then stored  in an offline database using IndexedDB, which will create an app shell architecture.
 
 I chose to learn webpack, a static module bundler, for this project to optimize my code, increase performance times, and to run the service worker.
 
 
 
 ## Server API
- 1. Clone the [server repository](https://github.com/udacity/mws-restaurant-stage-2.git). You’ll use this development server to develop your project code.
+ 1. Clone the [server repository](https://github.com/udacity/mws-restaurant-stage-3.git). You’ll use this development server to develop your project code.
  2. Install project dependancies
     ```
     npm i

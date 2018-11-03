@@ -109,7 +109,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     text-decoration: underline;
 }
 
-/* ====================== Title ====================== */
+/* ====================== Breadcrumb ====================== */
 
 
 .breadcrumb {
@@ -149,7 +149,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
     color: #c15300;
     text-decoration: underline;
 }
-
 
 
 /* ====================== Map ====================== */
@@ -292,15 +291,12 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 .inside #restaurant-header {
     display: flex;
     flex-flow: row wrap;
-    /*border: 5px solid red ;*/
 }
 
 .favorite-button {
     border: none;
-    /*color: #333333;*/
     font-size: 20px;
     cursor: pointer;
-    /*border-radius: 75px;*/
 }
 
 .not-favorite {
@@ -319,7 +315,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 
 .inside {
     background-color: #f3f3f3;
-    /*margin: 5px 0 5px 10px;*/
 }
 
 .selected {
@@ -571,6 +566,8 @@ input[type=radio] {
         height: 75vh;
     }
 }
+
+/*changing colors in leaflet*/
 
 .leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
     color: #01447e;
