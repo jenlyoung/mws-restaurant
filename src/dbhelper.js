@@ -17,6 +17,7 @@ class DBHelper {
     constructor() {
         this.online = true;
     }
+
     /**
      * Database URL.
      * Change this to restaurants.json file location on your server.
@@ -26,50 +27,18 @@ class DBHelper {
         return `http://localhost:${port}`;
     }
 
-    static get isOnline(){
-        return this.online;
+    //c
+    static get isOnline() {
+        return this.online || window.navigator.onLine;
     }
 
     /**
      * Fetch all restaurants.
      */
-    static fetchRestaurants(callback) {
-        //1st idbhelper checks cache
-
-        idbhelper.get('restaurants').then(value => {
-            //if in the cache, it gets used
-            //TODO: BYPASSING CACHE
-            value = null;
-            if (value) {
-                const restaurants = value;
-
-                callback(null, restaurants);
-                // if not in cache, makes an http request and serves and stores in cache
-            } else {
-                let xhr = new XMLHttpRequest();
-                xhr.open('GET', `${DBHelper.BASE_URL}/restaurants`);
-                xhr.onload = () => {
-                    if (xhr.status === 200) { // Got a success response from server!
-                        const json = JSON.parse(xhr.responseText);
-                        idbhelper.set('restaurants', json);
-                        callback(null, json);
-                    } else { // Oops!. Got an error from server.
-                        const error = (`Request failed. Returned status of ${xhr.status}`);
-                        callback(error, null);
-                    }
-                };
-                xhr.send();
-            }
-        })
-
-    }
-
-    static fetchRestaurants2() {
+    static fetchRestaurants() {
 
         return idbhelper.get('restaurants').then(value => {
             //if in the cache, it gets used
-            //TODO: BYPASSING CACHE
-            value = null;
             if (value) {
                 const restaurants = value;
                 return restaurants;
@@ -99,20 +68,10 @@ class DBHelper {
      */
     static fetchRestaurantById(id) {
         //http://localhost:1337/restaurants/3
-        let restaurantByIdUrl = `${DBHelper.BASE_URL}/restaurants/${id}`;
-
-        return fetch(restaurantByIdUrl, {
-            method: 'GET'
-        }).then((response => {
-            if (response.status === 200) {
-                return response.json();
-            }
-        })).then(json => {
-            return json;
-        }).catch(e => {
-            return 'Error getting reviews';
-            //TODO: Research catch
-        });
+        return this.fetchRestaurants()
+            .then(restaurants => {
+                return restaurants.find(value => value.id == id);
+            });
     }
 
 
@@ -124,17 +83,30 @@ class DBHelper {
     static fetchReviewsByRestaurantId(id) {
         let reviewByRestaurantIdUrl = `${DBHelper.BASE_URL}/reviews?restaurant_id=${id}`;
 
-        return fetch(reviewByRestaurantIdUrl, {
-            method: 'GET'
-        }).then((response => {
-            if (response.status === 200) {
-                return response.json();
+        return idbhelper.get(`restaurants-reviews:${id}`).then(value => {
+            //if in the cache, it gets used
+            if (value) {
+                const reviews = value;
+                return reviews;
             }
-        })).then(json => {
-            return json;
-        }).catch(e => {
-            return 'Error getting reviews';
-            //TODO: Research catch
+            else {
+
+                return fetch(reviewByRestaurantIdUrl, {
+                    method: 'GET'
+                }).then((response => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                })).then(json => {
+                    return json;
+                }).then(json => {
+                    idbhelper.set(`restaurants-reviews:${id}`, json);
+                    return json;
+                }).catch(e => {
+                    return 'Error getting reviews';
+                    //TODO: Research catch
+                });
+            }
         });
     }
 
@@ -180,6 +152,7 @@ class DBHelper {
     /**
      * Fetch restaurants by a neighborhood with proper error handling.
      */
+
     /*static fetchRestaurantByNeighborhood(neighborhood, callback) {
         // Fetch all restaurants
         DBHelper.fetchRestaurants((error, restaurants) => {
@@ -198,7 +171,7 @@ class DBHelper {
      */
     static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood) {
         // Fetch all restaurants
-        return DBHelper.fetchRestaurants2().then(restaurants => {
+        return DBHelper.fetchRestaurants().then(restaurants => {
             let results = restaurants;
 
             if (cuisine != 'all') { // filter by cuisine
@@ -216,7 +189,7 @@ class DBHelper {
      */
     static fetchNeighborhoods() {
         // Fetch all restaurants by neighborhood
-        return DBHelper.fetchRestaurants2().then (restaurants => {
+        return DBHelper.fetchRestaurants().then(restaurants => {
             // Get all neighborhoods from all restaurants
             const neighborhoods = restaurants.map((v, i) => restaurants[i].neighborhood)
             // Remove duplicates from neighborhoods
@@ -231,7 +204,7 @@ class DBHelper {
      */
     static fetchCuisines() {
         // Fetch all restaurants
-        return DBHelper.fetchRestaurants2().then (restaurants => {
+        return DBHelper.fetchRestaurants().then(restaurants => {
             // Get all cuisines from all restaurants
             const cuisines = restaurants.map((v, i) => restaurants[i].cuisine_type)
             // Remove duplicates from cuisines
@@ -240,7 +213,6 @@ class DBHelper {
             return uniqueCuisines;
         });
     }
-
 
 
     /**
@@ -282,22 +254,32 @@ class DBHelper {
     static addReviewForRestaurant(reviewData) {
 
         let url = `${DBHelper.BASE_URL}/reviews`;
-        if(DBHelper.isOnline) {
+        if (DBHelper.isOnline) {
             return fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(reviewData)
-            }).then((res) => res.json())
-                .then((data) => console.log(data))
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    idbhelper.delete(`restaurants-reviews:${reviewData.id}`)
+                })
                 .catch((err) => console.log(err));
         }
-        else{
-
+        else {
+            return idbhelper.get('offline-review').then(value => {
+                let all = value || [];
+                all.push({
+                    review: reviewData
+                });
+                return idbhelper.set('offline-review', all);
+            })
         }
     }
 
     static toggleIsFavoriteStatus(id, isFavorite) {
         let url = `${DBHelper.BASE_URL}/restaurants/${id}/?is_favorite=${isFavorite}`;
-        if(DBHelper.isOnline) {
+        if (DBHelper.isOnline) {
             return fetch(url, {
                 method: 'PUT',
             }).then(response => {
@@ -306,9 +288,39 @@ class DBHelper {
                 return false;
             });
         }
-        else{
-            //TODO: save to queue
+        else {
+            return idbhelper.get('offline-favorite').then(value => {
+                let all = value || [];
+                all.push({
+                    restaurantId: id,
+                    isFavorite: isFavorite
+                });
+                return idbhelper.set('offline-favorite', all);
+            })
         }
+    }
+
+    static syncOfflineData() {
+        idbhelper.get('offline-favorite').then(async items => {
+            const allItems = items || [];
+
+            console.log(`Syncing favorite items: ${allItems.length}`);
+            for (let item of allItems) {
+                await DBHelper.toggleIsFavoriteStatus(item.restaurantId, item.isFavorite);
+            }
+            return idbhelper.set('offline-favorite', []);
+        });
+
+        idbhelper.get('offline-review').then(async items => {
+            const allItems = items || [];
+
+            console.log(`Syncing review items: ${allItems.length}`);
+
+            for (let item of allItems) {
+                await DBHelper.addReviewForRestaurant(item.review);
+            }
+            return idbhelper.set('offline-review', []);
+        });
     }
 
     static setOffline() {
@@ -320,12 +332,11 @@ class DBHelper {
         console.log("online");
         DBHelper.online = true;
 
+        DBHelper.syncOfflineData();
     }
 
 
-
 }
-
 
 
 //new comment

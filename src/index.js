@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     //testing online and offline
-    function updateOnlineStatus(event){
+    function updateOnlineStatus(){
         if (window.navigator.onLine){
             DBHelper.setOnline();
         } else {

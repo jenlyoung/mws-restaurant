@@ -36,7 +36,7 @@
         <img id="restaurant-img">
     </section>
     <section id="restaurant-header">
-        <button id = "favorite-button" class="inside favorite-button"><i class="fa fa-heart"></i></button>
+        <button id = "favorite-button" class="inside favorite-button" aria-label="Favorite Button"><i class="fa fa-heart"></i></button>
         <h2 id="restaurant-name" tabindex="0"></h2>
     </section>
     <!--Beginning map-->
@@ -56,34 +56,33 @@
     <!-- beginning review form -->
     <section id="form-container">
         <h3 class="form-title">Write a Review</h3><br>
-        <form id="review-form" action="">
+        <form id="review-form" role="form" aria-label="Review Form">
             <div id="name-input">
-                <label class="form-label" for="name">Name</label><br>
+                <label class="form-label" for="name" aria-labelledby="name">Name</label><br>
                 <input type="text" id="name" name="name" placeholder="Your name..">
             </div>
             <div id="rating-input">
-                <label class="form-label" for="rating">Rating</label><br>
-                <div id="rating">
+                <label class="form-label" for="rating" aria-labelledby="rating">Rating</label><br>
+                <div id="rating" role="radiogroup" aria-labelledby="rating">
                     <!--<select id="user-rating" name="rating" aria-label="User rating selections">-->
                         <!--<option value="1">1</option>-->
                         <!--<option value="2">2</option>-->
                         <!--<option value="3">3</option>-->
                         <!--<option value="4">4</option>-->
                     <!--</select>-->
-                    <input type="radio" name="rating" value="1" checked> 1
-                    <input type="radio" name="rating" value="2" checked> 2
-                    <input type="radio" name="rating" value="3" checked> 3
-                    <input type="radio" name="rating" value="4" checked> 4
-                    <input type="radio" name="rating" value="5" checked> 5
-
+                    <input type="radio" name="rating" value="1" aria-labelledby="1"> 1
+                    <input type="radio" name="rating" value="2" aria-labelledby="2"> 2
+                    <input type="radio" name="rating" value="3" aria-labelledby="3"> 3
+                    <input type="radio" name="rating" value="4" aria-labelledby="4"> 4
+                    <input type="radio" name="rating" value="5" aria-labelledby="5"> 5
                 </div>
             </div>
             <div id="comment-input">
-                <label class="form-label" for="comment">Comments</label><br>
+                <label class="form-label" for="comment" aria-labelledby="comments">Comments</label><br>
                 <textarea id="comment" name="comment" placeholder="Write something.."></textarea>
             </div>
             <div id="submit-button">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" aria-labelledby="submit-button">
             </div>
         </form>
     </section>
@@ -92,7 +91,7 @@
 
     <!-- Beginning reviews -->
     <section id="reviews-container">
-        <h3>Reviews</h3>
+        <h3>Reviews <span id="reviewCount"></span></h3>
         <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->

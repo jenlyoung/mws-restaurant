@@ -17,6 +17,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (window.location.pathname !== '/restaurant.html') {
         return;
     }
+    //testing online and offline
+    function updateOnlineStatus(){
+        if (window.navigator.onLine){
+            DBHelper.setOnline();
+        } else {
+            DBHelper.setOffline();
+        }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
     initMap();
 
     //event listener for favorite button toggle
@@ -191,13 +202,16 @@ let fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours)
 let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
     const container = document.getElementById('reviews-container');
 
-
     if (!reviews) {
         const noReviews = document.createElement('p');
         noReviews.innerHTML = 'No reviews yet!';
         container.appendChild(noReviews);
         return;
     }
+    const reviewCount = document.getElementById('reviewCount');
+
+    reviewCount.innerHTML = `(${reviews.length})`;
+
     const ul = document.getElementById('reviews-list');
     reviews.forEach(review => {
         ul.appendChild(createReviewHTML(review));
