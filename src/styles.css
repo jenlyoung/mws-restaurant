@@ -571,3 +571,11 @@ input[type=radio] {
         height: 75vh;
     }
 }
+
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
+    color: #01447e;
+}
+
+.leaflet-container a{
+    color: #01447e;
+}

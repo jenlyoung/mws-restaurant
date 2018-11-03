@@ -1,9 +1,11 @@
 import * as L from "leaflet";
 import './styles.css';
+import './radio.css';
 import DBHelper from "./dbhelper";
 import 'normalize.css';
 import 'leaflet/dist/leaflet.css';
 import registerServiceWorker from "./register";
+import RadioGroup from './radioGroup';
 
 registerServiceWorker();
 
@@ -17,16 +19,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (window.location.pathname !== '/restaurant.html') {
         return;
     }
+
     //testing online and offline
-    function updateOnlineStatus(){
-        if (window.navigator.onLine){
+    function updateOnlineStatus() {
+        if (window.navigator.onLine) {
             DBHelper.setOnline();
         } else {
             DBHelper.setOffline();
         }
     }
+
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
+
+    const ratingGroup = new RadioGroup(document.getElementById('rating'));
+    ratingGroup.init();
 
     initMap();
 
@@ -50,7 +57,7 @@ let submitReview = () => {
     //grab values and put then in json
     let name = document.getElementById('name').value;
     let comments = document.getElementById('comment').value;
-    let rating = document.querySelector('input[name="rating"]:checked').value;
+    let rating = document.querySelector('div[role="radio"][aria-checked="true"]').innerHTML;
 
     const reviewData = {
         restaurant_id: self.restaurant.id,
@@ -64,10 +71,10 @@ let submitReview = () => {
     DBHelper.addReviewForRestaurant(reviewData)
         .then(() => {
             addNewReviewHTML(reviewData);
-    })
-        .then (() =>{
-        document.forms["review-form"].reset();
-    });
+        })
+        .then(() => {
+            document.forms["review-form"].reset();
+        });
 
 };
 
@@ -82,14 +89,14 @@ let toggleFavoriteStatus = () => {
 
     //toggles status in database
     DBHelper.toggleIsFavoriteStatus(self.restaurant.id, self.restaurant.is_favorite)
-        //if something is wrong with the api it will just set it back
-        .then(success=>{
-        if(!success){
-            //Have to do this because the API changes the bool to a string
-            self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
-        }
-        colorIsFavoriteHeart();
-    });
+    //if something is wrong with the api it will just set it back
+        .then(success => {
+            if (!success) {
+                //Have to do this because the API changes the bool to a string
+                self.restaurant.is_favorite = (!(self.restaurant.is_favorite == "true")).toString();
+            }
+            colorIsFavoriteHeart();
+        });
 }
 
 /**
@@ -175,7 +182,6 @@ let fillRestaurantHTML = (restaurant = self.restaurant) => {
 }
 
 
-
 /**
  * Create restaurant operating hours HTML table and add it to the webpage.
  */
@@ -208,9 +214,6 @@ let fillReviewsHTML = (reviews = self.restaurant.reviews) => {
         container.appendChild(noReviews);
         return;
     }
-    const reviewCount = document.getElementById('reviewCount');
-
-    reviewCount.innerHTML = `(${reviews.length})`;
 
     const ul = document.getElementById('reviews-list');
     reviews.forEach(review => {

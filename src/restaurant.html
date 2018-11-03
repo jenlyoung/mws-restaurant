@@ -70,11 +70,11 @@
                         <!--<option value="3">3</option>-->
                         <!--<option value="4">4</option>-->
                     <!--</select>-->
-                    <input type="radio" name="rating" value="1" aria-labelledby="1"> 1
-                    <input type="radio" name="rating" value="2" aria-labelledby="2"> 2
-                    <input type="radio" name="rating" value="3" aria-labelledby="3"> 3
-                    <input type="radio" name="rating" value="4" aria-labelledby="4"> 4
-                    <input type="radio" name="rating" value="5" aria-labelledby="5"> 5
+                    <div role="radio" aria-checked="false" tabindex="0">1 </div>
+                    <div role="radio" aria-checked="false" tabindex="-1">2 </div>
+                    <div role="radio" aria-checked="false" tabindex="-1">3 </div>
+                    <div role="radio" aria-checked="false" tabindex="-1">4 </div>
+                    <div role="radio" aria-checked="false" tabindex="-1">5 </div>
                 </div>
             </div>
             <div id="comment-input">
@@ -91,7 +91,7 @@
 
     <!-- Beginning reviews -->
     <section id="reviews-container">
-        <h3>Reviews <span id="reviewCount"></span></h3>
+        <h3>Reviews</h3>
         <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->

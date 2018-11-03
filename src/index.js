@@ -171,6 +171,8 @@ let createRestaurantHTML = (restaurant) => {
 
     initialClassName += restaurant.is_favorite == "true" ? ' is-favorite' : ' not-favorite';
 
+    favorite.setAttribute('aria-label', restaurant.is_favorite == "true" ? "restaurant is favorite" : "restaurant is not favorite")
+
     favorite.className = initialClassName;
 
     favorite.onclick = function (e) {
@@ -182,8 +184,10 @@ let createRestaurantHTML = (restaurant) => {
 
         if (restaurant.is_favorite==="true") {
             favorite.className = 'first favorite-button is-favorite';
+            favorite.setAttribute('aria-label', "restaurant is favorite")
         } else {
             favorite.className = 'first favorite-button not-favorite';
+            favorite.setAttribute('aria-label', "restaurant is not favorite")
         }
     };
     li.append(favorite);
